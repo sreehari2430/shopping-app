@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy JAR app to Azure Web App - shopapp-api2026
 
 on:
@@ -20,16 +23,18 @@ jobs:
         with:
           java-version: '21'
           distribution: 'microsoft'
+          cache: maven
+          cache-dependency-path: backend/shopping-backend/pom.xml
 
       - name: Build with Maven
-        working-directory: backend
-        run: mvn clean install
+        working-directory: backend/shopping-backend
+        run: mvn -B clean package
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/backend/target/*.jar'
+          path: '${{ github.workspace }}/backend/shopping-backend/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,9 +52,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.__clientidsecretname__ }}
-          tenant-id: ${{ secrets.__tenantidsecretname__ }}
-          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4034D4A76DAF4D48BCBDFC7F5964836A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6C697EAF3F9E422E89568D7950ED521B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_45770134DF514771A343B3DA2AE2630E }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
