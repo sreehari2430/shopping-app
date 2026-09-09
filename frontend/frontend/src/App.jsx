@@ -6,9 +6,15 @@ function App() {
 
   useEffect(() => {
 
-    fetch("http://localhost:8080/api/products")
-      .then(response => response.json())
-      .then(data => setProducts(data));
+    fetch("https://shopapp-api2026-d8e8grb7edb9g8g8.indiasouthcentral-01.azurewebsites.net/api/products")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => setProducts(data))
+      .catch(error => console.error("Failed to load products:", error));
 
   }, []);
 

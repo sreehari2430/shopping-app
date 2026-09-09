@@ -17,7 +17,10 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
 
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173")
+                        .allowedOrigins(
+                                "http://localhost:5173",
+                                "https://wonderful-pond-09f6ebc00.5.azurestaticapps.net"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
